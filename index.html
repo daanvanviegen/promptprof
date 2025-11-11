@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouw Logboek App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏗️ Bouw Logboek</h1>
+            <p class="subtitle">Digitaal logboek voor bouwprojecten</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="logboeken">Logboeken</button>
+            <button class="tab-button" data-tab="tekeningen">Tekeningen</button>
+            <button class="tab-button" data-tab="werkzaamheden">Werkzaamheden</button>
+        </nav>
+
+        <!-- Logboeken Tab -->
+        <div id="logboeken" class="tab-content active">
+            <div class="section-header">
+                <h2>Logboeken</h2>
+                <button class="btn btn-primary" id="newLogboekBtn">+ Nieuw Logboek</button>
+            </div>
+
+            <div id="logboekenList" class="list-container">
+                <!-- Logboeken worden hier dynamisch toegevoegd -->
+            </div>
+
+            <!-- Modal voor nieuw logboek -->
+            <div id="logboekModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Nieuw Logboek</h3>
+                    <form id="logboekForm">
+                        <div class="form-group">
+                            <label for="projectNaam">Projectnaam</label>
+                            <input type="text" id="projectNaam" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectLocatie">Locatie</label>
+                            <input type="text" id="projectLocatie" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectOpdrachtgever">Opdrachtgever</label>
+                            <input type="text" id="projectOpdrachtgever" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDatum">Startdatum</label>
+                            <input type="date" id="startDatum" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectBeschrijving">Beschrijving</label>
+                            <textarea id="projectBeschrijving" rows="3"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelLogboek">Annuleren</button>
+                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tekeningen Tab -->
+        <div id="tekeningen" class="tab-content">
+            <div class="section-header">
+                <h2>Bouwtechnische Tekeningen</h2>
+                <button class="btn btn-primary" id="uploadTekeningingBtn">+ Upload Tekening</button>
+            </div>
+
+            <div class="filter-section">
+                <label for="logboekFilter">Filter op logboek:</label>
+                <select id="logboekFilter">
+                    <option value="">Alle logboeken</option>
+                </select>
+            </div>
+
+            <div id="tekeningenList" class="tekeningen-grid">
+                <!-- Tekeningen worden hier dynamisch toegevoegd -->
+            </div>
+
+            <!-- Modal voor nieuwe tekening -->
+            <div id="tekeningModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Upload Tekening</h3>
+                    <form id="tekeningForm">
+                        <div class="form-group">
+                            <label for="tekeningLogboek">Logboek</label>
+                            <select id="tekeningLogboek" required>
+                                <option value="">Selecteer logboek...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tekeningNaam">Naam tekening</label>
+                            <input type="text" id="tekeningNaam" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tekeningType">Type</label>
+                            <select id="tekeningType">
+                                <option value="plattegrond">Plattegrond</option>
+                                <option value="doorsnede">Doorsnede</option>
+                                <option value="detail">Detail</option>
+                                <option value="gevel">Gevel</option>
+                                <option value="installatie">Installatie</option>
+                                <option value="overig">Overig</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tekeningFile">Bestand</label>
+                            <input type="file" id="tekeningFile" accept="image/*,.pdf" required>
+                            <small>Ondersteunde formaten: JPG, PNG, PDF</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="tekeningNotities">Notities</label>
+                            <textarea id="tekeningNotities" rows="2"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelTekening">Annuleren</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal voor tekening weergave -->
+            <div id="tekeningViewModal" class="modal">
+                <div class="modal-content modal-large">
+                    <span class="close">&times;</span>
+                    <div id="tekeningViewContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Werkzaamheden Tab -->
+        <div id="werkzaamheden" class="tab-content">
+            <div class="section-header">
+                <h2>Toegepaste Werkzaamheden</h2>
+                <button class="btn btn-primary" id="newWerkzaamheidBtn">+ Nieuwe Werkzaamheid</button>
+            </div>
+
+            <div class="filter-section">
+                <label for="werkzaamheidLogboekFilter">Filter op logboek:</label>
+                <select id="werkzaamheidLogboekFilter">
+                    <option value="">Alle logboeken</option>
+                </select>
+            </div>
+
+            <div id="werkzaamhedenList" class="list-container">
+                <!-- Werkzaamheden worden hier dynamisch toegevoegd -->
+            </div>
+
+            <!-- Modal voor nieuwe werkzaamheid -->
+            <div id="werkzaamheidModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Nieuwe Werkzaamheid</h3>
+                    <form id="werkzaamheidForm">
+                        <div class="form-group">
+                            <label for="werkzaamheidLogboek">Logboek</label>
+                            <select id="werkzaamheidLogboek" required>
+                                <option value="">Selecteer logboek...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidDatum">Datum</label>
+                            <input type="date" id="werkzaamheidDatum" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidType">Type werkzaamheid</label>
+                            <select id="werkzaamheidType">
+                                <option value="fundering">Fundering</option>
+                                <option value="metselwerk">Metselwerk</option>
+                                <option value="kozijnen">Kozijnen & Ramen</option>
+                                <option value="dak">Dakconstructie</option>
+                                <option value="isolatie">Isolatie</option>
+                                <option value="stucwerk">Stucwerk</option>
+                                <option value="installatie">Installatie</option>
+                                <option value="afwerking">Afwerking</option>
+                                <option value="overig">Overig</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidUitvoerder">Uitvoerder</label>
+                            <input type="text" id="werkzaamheidUitvoerder" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidBeschrijving">Beschrijving</label>
+                            <textarea id="werkzaamheidBeschrijving" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidStatus">Status</label>
+                            <select id="werkzaamheidStatus">
+                                <option value="gepland">Gepland</option>
+                                <option value="bezig">In uitvoering</option>
+                                <option value="afgerond">Afgerond</option>
+                                <option value="goedgekeurd">Goedgekeurd</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="werkzaamheidOpmerkingen">Opmerkingen</label>
+                            <textarea id="werkzaamheidOpmerkingen" rows="2"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelWerkzaamheid">Annuleren</button>
+                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
